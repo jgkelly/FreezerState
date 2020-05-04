@@ -15,4 +15,16 @@ from os import listdir, system
 #from flask import Flask, jsonify
 #from flask.ext.cors import CORS
 
-# TODO: Code goes here. 
+DEVICE_FOLDER = "/sys/bus/w1/devices/"
+DEVICE_SUFFIX = "/W1_slave"
+WAIT_INTERNAL = 0.2
+
+system('modprobe w1-gpio')
+system('modprobe w1-therm')
+    
+def main():
+    
+    return
+
+if __name__ == "__main__":
+    main()
