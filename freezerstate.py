@@ -44,17 +44,16 @@ def find_sensor():
 
 def get_temperature():
     lines = raw_temperature()
-    while lines[0].strip()[-3:] != 'YES':
+    
+    while not lines and len(lines) < 2 and lines[0].strip()[-3:] != 'YES':
         time.sleep(0.2)
         lines = raw_temperature()
-    output_temperature = lines[1].find('t=')
+    output_temperature = lines[1].split('t=')[1]
     if output_temperature != 1:
-        temperature_string = lines[1].strip()[output_temperature+2]
-        celsius = float(temperature_string) / 1000.0
-        farenheit = celsius * 9.0 / 5.0 + 32.0
-        response = {'raw', temperature_string, 
-                    'celsius', celsius, 
-                    'farenheit', farenheit}
+        celsius = round(float(output_temperature) / 1000.0, 1)
+        farenheit = round((celsius * 1.8) + 32.0, 1)
+        response = {'celsius': celsius, 
+                    'farenheit': farenheit}
         return response
     
 def main():
