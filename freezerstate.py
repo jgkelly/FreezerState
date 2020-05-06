@@ -52,13 +52,16 @@ def get_temperature():
         temperature_string = lines[1].strip()[output_temperature+2]
         celsius = float(temperature_string) / 1000.0
         farenheit = celsius * 9.0 / 5.0 + 32.0
-        return celsius, farenheit
+        response = {'raw', temperature_string, 
+                    'celsius', celsius, 
+                    'farenheit', farenheit}
+        return response
     
 def main():
     print ('Getting temperature...')
     
     while True:
-        print(f'Time: {datetime.now()} - {get_temperature()}\n')
+        print(f'Time: {datetime.now()} - {get_temperature()}')
         time.sleep(1)
     return
 
