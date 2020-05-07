@@ -15,13 +15,13 @@ class EmailSender():
         smtp_password = freezerstate.config.SMTP_PASSWORD if test_password is None else test_password
 
         if self.enabled is True:
-            # context = ssl.create_default_context()
+            context = ssl.create_default_context()
 
-            # with smtplib.SMTP_SSL(smtp_server, smtp_port, context=context) as server:
+            # with smtplib.SMTP_SSL(self.smtp_server, smtp_port, context=context) as server:
             #     server.login()
-            # # TODO: Complete this code
+            # TODO: Complete this code
             
-            # print(f'--- {module} - Sending {message} to {recipient}')
+            print(f'--- {self.module} - Sending {message} to {recipient} via {self.smtp_server}')
             return True
         else:
             return False
