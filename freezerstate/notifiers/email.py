@@ -1,4 +1,5 @@
 import freezerstate.config
+import smtplib, ssl
 
 class EmailSender():
     
