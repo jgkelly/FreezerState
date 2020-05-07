@@ -1,4 +1,5 @@
 import freezerstate.config
+import requests
 
 class SlackSender():
     
@@ -9,8 +10,18 @@ class SlackSender():
 
     def notify(self, message):
         if (self.enabled is True):
-            # TODO: Complete this code
             print(f'--- {self.module} - Sending {message} to {self.webhook_url}')
-            return True;
+
+            payload = {
+                "text": message
+            }
+
+            try:
+                requests.post(self.webhook_url, json=payload, verify=True)
+            except Exception as e:
+                print(f'{self.module} - Slack notify failed: {e}')
+                return False
+            return True
         else:
-            return False;
+            print(f'{self.module} - Slack Sender is disabled')
+            return False
