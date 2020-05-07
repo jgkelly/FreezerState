@@ -10,7 +10,7 @@ class SlackSender():
     def notify(self, message):
         if (self.enabled is True):
             # TODO: Complete this code
-            print(f'--- {module} - Sending {message} to {webhook_url}')
+            #print(f'--- {module} - Sending {message} to {webhook_url}')
+            return True;
         else:
             return False;
-        return True;
