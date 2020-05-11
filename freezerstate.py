@@ -1,7 +1,7 @@
 """
 freezerstate.py
 
-Temperature sensing and alerting application to be run on a Raspberry Pi. 
+Temperature sensing and alerting application to be run on a Raspberry Pi.
 
 Code based on ModMyPi's tutorial:
 - http://www.modmypi.com/blog/ds18b20-one-wire-digital-temperature-sensor-and-the-raspberry-pi
@@ -27,7 +27,7 @@ DEVICE_SUFFIX = "/w1_slave"
 
 system('modprobe w1-gpio')
 system('modprobe w1-therm')
-    
+
 def raw_temperature():
     f = open(find_sensor(), 'r')
     lines = f.readlines()
@@ -44,7 +44,7 @@ def find_sensor():
 
 def get_temperature():
     lines = raw_temperature()
-    
+
     while not lines and len(lines) < 2 and lines[0].strip()[-3:] != 'YES':
         time.sleep(0.2)
         lines = raw_temperature()
@@ -52,13 +52,15 @@ def get_temperature():
     if output_temperature != 1:
         celsius = round(float(output_temperature) / 1000.0, 1)
         farenheit = round((celsius * 1.8) + 32.0, 1)
-        response = {'celsius': celsius, 
+        response = {'celsius': celsius,
                     'farenheit': farenheit}
         return response
-    
+
 def main():
+    assert sys.version_info >= (3,8)
+
     print ('Getting temperature...')
-    
+
     while True:
         print(f'Time: {datetime.now()} - {get_temperature()}')
         time.sleep(1)
