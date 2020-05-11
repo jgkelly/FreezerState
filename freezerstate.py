@@ -59,7 +59,7 @@ def get_temperature():
         return response
 
 def main():
-    assert sys.version_info >= (3,8)
+    #assert sys.version_info >= (3,8)
 
     if hasattr(sys, 'frozen'):
         freezerstate.FULL_PATH = os.path.abspath(sys.executable)
