@@ -35,3 +35,10 @@ The Temperature section contains the minimum and maximum alerting values, and wh
 - `max_temperature` and `alert_on_max` control the maximum temperature (in degrees Celsius), and whether or not an alert is to be sent when the value specified in `max_temperature` is reached, or is greater.
 
 - `min_temperature` and `alert_on_min` control the minimum temperature (in degrees Celsius), and whether or not an alert is to be sent when the value specified in `min_temperature` is reached or is lower.
+
+### Slack Section
+
+This section contains the configuration values needed to send an alert to a configured slack Webhook URL.
+
+- `slack_enabled`: Set to `True` to enable notifications via Slack.
+- `slack_webhook_url`: Set this value to the URL you have configured to a Slack webhook application. Slack has a good article on setting up a Webhook [here](https://api.slack.com/messaging/webhooks).
