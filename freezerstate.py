@@ -13,20 +13,22 @@ Copyright (c) 2020, Jeff Kelly
 Licensed under the MIT license scheme
 """
 
+import os
 import sys
 import time
 from datetime import datetime
 from os import listdir, system
 
+import freezerstate.config
+import argparse
+
 #from flask import Flask, jsonify
 #from flask.ext.cors import CORS
 
-DEVICE_FOLDER = "/sys/bus/w1/devices/"
-DEVICE_SUFFIX = "/w1_slave"
 #WAIT_INTERNAL = 0.2
 
-system('modprobe w1-gpio')
-system('modprobe w1-therm')
+# system('modprobe w1-gpio')
+# system('modprobe w1-therm')
 
 def raw_temperature():
     f = open(find_sensor(), 'r')
@@ -35,10 +37,10 @@ def raw_temperature():
     return lines
 
 def find_sensor():
-    devices = listdir(DEVICE_FOLDER)
+    devices = listdir(freezerstate.DEVICE_FOLDER)
     devices = [device for device in devices if device.startswith('28-')]
     if devices:
-        return DEVICE_FOLDER + devices[0] + DEVICE_SUFFIX
+        return freezerstate.DEVICE_FOLDER + devices[0] + freezerstate.DEVICE_SUFFIX
     else:
         sys.exit("Could not find temperature sensor...")
 
@@ -58,6 +60,33 @@ def get_temperature():
 
 def main():
     assert sys.version_info >= (3,8)
+
+    if hasattr(sys, 'frozen'):
+        freezerstate.FULL_PATH = os.path.abspath(sys.executable)
+    else:
+        freezerstate.FULL_PATH = os.path.abspath(__file__)
+
+    freezerstate.PROG_DIR = os.path.dirname(freezerstate.FULL_PATH)
+
+    freezerstate.ARGS = sys.argv[1:]
+
+    parser = argparse.ArgumentParser(description='Temperature monitor and alerter')
+    parser.add_argument('--datadir', help='Alternate data directory')
+    parser.add_argument('--config', help='Alternate path to config file')
+    args = parser.parse_args()
+
+    if args.datadir:
+        freezerstate.DATA_DIR = args.datadir
+    else:
+        freezerstate.DATA_DIR = freezerstate.PROG_DIR
+
+    if args.config:
+        freezerstate.CONFIG_FILE = args.config
+    else:
+        freezerstate.CONFIG_FILE = os.path.join(freezerstate.DATA_DIR, 'config.ini')
+
+    print (f'Loading configuration from: {freezerstate.CONFIG_FILE}')
+    freezerstate.initialize(freezerstate.CONFIG_FILE)
 
     print ('Getting temperature...')
 

@@ -9,5 +9,6 @@
         "-p",
         "*test.py"
     ],
-    "pythonTestExplorer.testFramework": "pytest"
+    "pythonTestExplorer.testFramework": "pytest",
+    "microsoftAccount.logLevel": "trace"
 }
