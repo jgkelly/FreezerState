@@ -50,7 +50,7 @@ def plot_temp():
         fig = Figure()
         ys = freezerstate.GRAPH.temperatures()
         axis = fig.add_subplot(1, 1, 1)
-        axis.set_title(f'Temperature ({freezerstate.conversion.UnitString()})')
+        axis.set_title(f'Temperature ({freezerstate.CONVERSION.UnitString()})')
         axis.set_xlabel('samples')
         axis.grid(True)
         xs = range(freezerstate.GRAPH.sample_count())
