@@ -31,7 +31,7 @@ class TemperatureGraph:
         return numpy.array(self.temperatures)
 
     def sample_count(self):
-        return len(self.x)
+        return len(self.y)
 
     def last_time(self):
         return self.x[-1]

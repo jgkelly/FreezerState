@@ -19,6 +19,7 @@ import sys
 import time
 import threading
 import argparse
+import numpy
 from datetime import datetime
 from os import listdir, system
 from flask import Flask, jsonify, render_template, make_response
@@ -53,7 +54,7 @@ def plot_temp():
         axis.set_title(f'Temperature ({freezerstate.CONVERSION.UnitString()})')
         axis.set_xlabel('samples')
         axis.grid(True)
-        xs = range(freezerstate.GRAPH.sample_count())
+        xs = numpy.array(range(freezerstate.GRAPH.sample_count()))
         axis.plot(xs, ys)
         canvas = FigureCanvas(fig)
         output = io.BytesIO()
