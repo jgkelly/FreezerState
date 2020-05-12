@@ -14,14 +14,14 @@ class TemperatureGraph:
 
 
     def plot(self, x, y):
-        if (self.x.count > self.max_data_points):
+        if (len(self.x) > self.max_data_points):
             self.x.pop(0)
             self.y.pop(0)
 
         self.x.append(x)
         self.y.append(y)
 
-        print(f'-- X Count: {self.x.count} - Y Count: {self.y.count}')
+        print(f'-- X Count: {len(self.x)} - Y Count: {len(self.y)}')
 
     def last_time(self):
         return self.x[-1]
