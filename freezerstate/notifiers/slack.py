@@ -2,7 +2,7 @@ import freezerstate.config
 import requests
 
 class SlackSender():
-    
+
     def __init__(self, test_enabled = None, test_slack_server = None):
         self.module = '[SLACK]'
         self.enabled = freezerstate.config.SLACK_ENABLED if test_enabled is None else test_enabled
