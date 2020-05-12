@@ -5,6 +5,7 @@
 
 import freezerstate.config
 import threading
+import numpy
 
 class TemperatureGraph:
 
@@ -27,7 +28,7 @@ class TemperatureGraph:
             print(f'-- X Count: {len(self.x)} - Y Count: {len(self.y)}')
 
     def temperatures(self):
-        return self.temperatures
+        return numpy.array(self.temperatures)
 
     def sample_count(self):
         return len(self.x)
