@@ -18,6 +18,7 @@ import sys
 import time
 from datetime import datetime
 from os import listdir, system
+from flask import Flask, jsonify, render_template
 
 import freezerstate.config
 import argparse
@@ -29,6 +30,16 @@ import argparse
 
 system('modprobe w1-gpio')
 system('modprobe w1-therm')
+
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    template_data = {
+        'time': freezerstate.GRAPH.last_time(),
+        'temperature': freezerstate.GRAPH.last_temp()
+    }
+    return render_template('index.html', **template_data)
 
 def raw_temperature():
     f = open(find_sensor(), 'r')
@@ -94,4 +105,5 @@ def main():
     return
 
 if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=80, debug=False)
     main()
