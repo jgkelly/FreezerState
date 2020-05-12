@@ -53,7 +53,7 @@ def plot_temp():
         axis = fig.add_subplot(1, 1, 1)
         axis.set_title(f'{freezerstate.CONFIG.LOCATION} Temperature History')
         axis.set_ylabel(f'Temperature ({freezerstate.CONVERSION.UnitString()})')
-        axis.set_xlabel('samples')
+        axis.set_xlabel('Time')
         axis.grid(True)
         xs = numpy.array(freezerstate.GRAPH.times())
         axis.plot(xs, ys)
