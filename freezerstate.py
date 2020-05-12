@@ -25,11 +25,6 @@ from flask import Flask, jsonify, render_template
 import freezerstate.config
 import freezerstate.conversion
 
-#from flask import Flask, jsonify
-#from flask.ext.cors import CORS
-
-#WAIT_INTERNAL = 0.2
-
 system('modprobe w1-gpio')
 system('modprobe w1-therm')
 
