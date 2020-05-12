@@ -49,7 +49,7 @@ def plot_temp():
     self_lock = threading.Lock()
     with self_lock:
         fig = Figure()
-        ys = freezerstate.GRAPH.temperatures()
+        ys = numpy.array(freezerstate.GRAPH.temperatures())
         axis = fig.add_subplot(1, 1, 1)
         axis.set_title(f'Temperature ({freezerstate.CONVERSION.UnitString()})')
         axis.set_xlabel('samples')
@@ -59,7 +59,7 @@ def plot_temp():
         canvas = FigureCanvas(fig)
         output = io.BytesIO()
         canvas.print_png(output)
-        response = make_response(output.getvalue)
+        response = make_response(output.getvalue())
         response.mimetype = 'image/png'
         return response
 
