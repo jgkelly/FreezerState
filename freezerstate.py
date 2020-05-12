@@ -32,7 +32,7 @@ import argparse
 system('modprobe w1-gpio')
 system('modprobe w1-therm')
 
-app = Flask(__name__)
+app = Flask('freezerstate')
 
 @app.route("/")
 def index():
