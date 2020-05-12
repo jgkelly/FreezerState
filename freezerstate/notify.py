@@ -19,7 +19,7 @@ class Notifier:
             'farenheit': ('F')
         })
         self.alert_frequency = freezerstate.CONFIG.ALERT_FREQUENCY
-        self.last_alert = datetime.min()
+        self.last_alert = datetime.min
 
     def update(self, temperature):
 
