@@ -40,8 +40,8 @@ def index():
     template_data = {
         'location': freezerstate.CONFIG.LOCATION,
         'time': freezerstate.GRAPH.last_time(),
-        'temperature': freezerstate.Conversion.TemperatureString(freezerstate.GRAPH.last_temp(), freezerstate.CONFIG.TEMPERATURE_UNITS, True)
-    }
+        'temperature': freezerstate.GRAPH.last_temp()
+        }
     return render_template('index.html', **template_data)
 
 def raw_temperature():
@@ -101,8 +101,9 @@ def main_thread(name):
 
     while True:
         temperature = get_temperature()
-        print(f'Time: {datetime.now()} - {freezerstate.Conversion.TemperatureString(temperature, freezerstate.CONFIG.TEMPERATURE_UNITS, True)}')
-        freezerstate.GRAPH.plot(datetime.now(), freezerstate.Conversion.UnitizedTemperature(temperature, freezerstate.CONFIG.TEMPERATURE_UNITS))
+
+        print(f'Time: {datetime.now()} - {freezerstate.CONVERSION.TemperatureString(temperature, True)}')
+        freezerstate.GRAPH.plot(datetime.now(), freezerstate.CONVERSION.UnitizedTemperature(temperature))
         freezerstate.NOTIFY.update(temperature)
         time.sleep(freezerstate.CONFIG.SAMPLE_FREQUENCY)
     return
