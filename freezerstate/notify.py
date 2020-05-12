@@ -18,7 +18,7 @@ class Notifier:
             'celsius': ('C'),
             'farenheit': ('F')
         })
-        self.alert_frequency = freezerstate.CONFIG.ALERT_FREQUENCY
+        self.alert_frequency = freezerstate.CONFIG.ALERT_FREQUENCY if test_enabled is None else 30
         self.last_alert = datetime.min
 
     def update(self, temperature):
@@ -26,9 +26,10 @@ class Notifier:
         if temperature < self.max_temperature and temperature > self.min_temperature:
             return False
 
-        current_time = datetime.now
-        if (self.last_alert - current_time < self.alert_frequency):
-            print(f'--- It has been {self.last_alert - current_time} seconds since last alert. Skipping this alert')
+        current_time = datetime.now()
+        difference = self.last_alert - current_time
+        if (difference.total_seconds() < self.alert_frequency):
+            print(f'--- It has been {difference.total_seconds()} seconds since last alert. Skipping this alert')
             return False
 
         self.last_alert = current_time
