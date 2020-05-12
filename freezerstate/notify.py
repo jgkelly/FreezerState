@@ -35,13 +35,15 @@ class Notifier:
 
     def get_notify_text(self, temperature):
         unitvalue = self.unit_conversion[self.units]
-        measurement = to_farenheit(temperature) if self.units == 'farenheit' else temperature
+        measurement = self.to_farenheit(temperature) if self.units == 'farenheit' else temperature
+        max_temp = self.to_farenheit(self.max_temperature) if self.units == 'farenheit' else self.max_temperature
+        min_temp = self.to_farenheit(self.min_temperature) if self.units == 'farenheit' else self.min_temperature
         readingLocation = 'Temperature' if self.location is None else f'{self.location} temperature'
 
         if temperature >= self.max_temperature:
-            result = f'🌡🔥 {readingLocation} is above {self.max_temperature}°{unitvalue} at {measurement}°{unitvalue}'
+            result = f'🌡🔥 {readingLocation} is above {max_temp}°{unitvalue} at {measurement}°{unitvalue}'
         else:
-            result = f'🌡❄ {readingLocation} is below {self.min_temperature}°{unitvalue} at {measurement}°{unitvalue}'
+            result = f'🌡❄ {readingLocation} is below {min_temp}°{unitvalue} at {measurement}°{unitvalue}'
 
         return result
 
