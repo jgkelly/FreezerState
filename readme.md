@@ -1,7 +1,7 @@
 # FreezerState
-Raspberry Pi freezer temperature monitor and notifier. 
+Raspberry Pi freezer temperature monitor and notifier.
 
-This project started after losing one too many freezer's full of food due to either a door not completely closed (it's an upright freezer, and the wife refuses to get a chest freezer), or a power outage. 
+This project started after losing one too many freezer's full of food due to either a door not completely closed (it's an upright freezer, and the wife refuses to get a chest freezer), or a power outage.
 
 The idea is to have a Raspberry Pi Zero sitting on some sort of battery back-up, monitoring the internal temperature within the freezer, and providing the following "services":
 
@@ -14,7 +14,7 @@ The idea is to have a Raspberry Pi Zero sitting on some sort of battery back-up,
 
 ## Requirements
 
-This project was written under Python 3.5 or greater. It was developed under Python 3.8.2. 
+This project was written under Python 3.8 or greater. It was developed under Python 3.8.2. The application will fail if you attempt to run it in any version of Python less than 3.8.
 
 ## Usage
 
@@ -24,4 +24,21 @@ Currently, you will need to run this in the same folder as freezerstate.py:
 python freezerstate.py
 ```
 
-***NOTE:*** Make sure python is set to run Python 3.5 or greater. 
+## Configuration
+
+Configuration values for your environment and preferences are available in the config.ini file located in the root of this repository.
+
+### Temperature Section
+
+The Temperature section contains the minimum and maximum alerting values, and whether the value should trigger an alert when reached.
+
+- `max_temperature` and `alert_on_max` control the maximum temperature (in degrees Celsius), and whether or not an alert is to be sent when the value specified in `max_temperature` is reached, or is greater.
+
+- `min_temperature` and `alert_on_min` control the minimum temperature (in degrees Celsius), and whether or not an alert is to be sent when the value specified in `min_temperature` is reached or is lower.
+
+### Slack Section
+
+This section contains the configuration values needed to send an alert to a configured slack Webhook URL.
+
+- `slack_enabled`: Set to `True` to enable notifications via Slack.
+- `slack_webhook_url`: Set this value to the URL you have configured to a Slack webhook application. Slack has a good article on setting up a Webhook [here](https://api.slack.com/messaging/webhooks).

@@ -1,0 +1,14 @@
+{
+    "python.pythonPath": "C:\\Users\\jgkel\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe",
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./test",
+        "-p",
+        "*test.py"
+    ],
+    "pythonTestExplorer.testFramework": "pytest",
+    "microsoftAccount.logLevel": "trace"
+}
