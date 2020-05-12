@@ -53,14 +53,9 @@ def get_temperature():
     output_temperature = lines[1].split('t=')[1]
     if output_temperature != 1:
         celsius = round(float(output_temperature) / 1000.0, 1)
-        farenheit = round((celsius * 1.8) + 32.0, 1)
-        response = {'celsius': celsius,
-                    'farenheit': farenheit}
-        return response
+        return celsius
 
 def main():
-    #assert sys.version_info >= (3,8)
-
     if hasattr(sys, 'frozen'):
         freezerstate.FULL_PATH = os.path.abspath(sys.executable)
     else:
@@ -91,8 +86,10 @@ def main():
     print ('Getting temperature...')
 
     while True:
-        print(f'Time: {datetime.now()} - {get_temperature()}')
-        time.sleep(1)
+        temperature = get_temperature()
+        print(f'Time: {datetime.now()} - {temperature}°C')
+        freezerstate.NOTIFY.update(temperature)
+        time.sleep(freezerstate.CONFIG.SAMPLE_FREQUENCY)
     return
 
 if __name__ == "__main__":
