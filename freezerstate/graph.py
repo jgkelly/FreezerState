@@ -23,3 +23,8 @@ class TemperatureGraph:
 
         print(f'-- X Count: {self.x.count} - Y Count: {self.y.count}')
 
+    def last_time(self):
+        return self.x[-1]
+
+    def last_temp(self):
+        return self.y[-1]

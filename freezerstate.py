@@ -37,8 +37,8 @@ app = Flask('freezerstate')
 @app.route("/")
 def index():
     template_data = {
-        'time': datetime.now(),
-        'temperature': 32
+        'time': freezerstate.GRAPH.last_time(),
+        'temperature': freezerstate.GRAPH.last_temp()
     }
     return render_template('index.html', **template_data)
 
