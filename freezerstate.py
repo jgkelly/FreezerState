@@ -37,6 +37,7 @@ app = Flask('freezerstate')
 @app.route("/")
 def index():
     template_data = {
+        'location': freezerstate.CONFIG.LOCATION,
         'time': freezerstate.GRAPH.last_time(),
         'temperature': freezerstate.GRAPH.last_temp()
     }
