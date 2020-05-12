@@ -21,8 +21,8 @@ class Conversion:
 
     def UnitString(self):
         unit_conversion = ({
-            'celsius': ('C'),
-            'farenheit': ('F')
+            'celsius': ('°C'),
+            'farenheit': ('°F')
         })
 
         unitvalue = unit_conversion[self.units]
