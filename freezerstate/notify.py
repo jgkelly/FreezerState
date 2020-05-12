@@ -54,23 +54,23 @@ class Notifier:
         level_change_description = self.change_description(temperature)
 
         if temperature >= self.max_temperature:
-            result = f'🌡🔥 {readingLocation} is above {max_temp}°{unitvalue} at {measurement}°{unitvalue}{level_change_description}. Time: {alert_time}'
+            result = f'🌡🔥{level_change_description} {readingLocation} is above {max_temp}°{unitvalue} at {measurement}°{unitvalue}. Time: {alert_time}'
         else:
-            result = f'🌡❄ {readingLocation} is below {min_temp}°{unitvalue} at {measurement}°{unitvalue}{level_change_description}. Time: {alert_time}'
+            result = f'🌡❄{level_change_description} {readingLocation} is below {min_temp}°{unitvalue} at {measurement}°{unitvalue}. Time: {alert_time}'
 
         return result
 
     def change_description(self, temperature):
         if (self.last_temperature is None):
-            return ''
+            return ' '
 
         if (temperature > self.last_temperature):
-            return ' ↗'
+            return '↗'
 
         if (temperature < self.last_temperature):
-            return ' ↘'
+            return '↘'
 
-        return ' ➡'
+        return '➡'
 
     def to_farenheit(self, celsius):
         farenheit = round((celsius * 1.8) + 32.0, 1)
