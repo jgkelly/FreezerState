@@ -27,4 +27,4 @@ class TemperatureGraph:
         return self.x[-1]
 
     def last_temp(self):
-        return self.y[-1]
+        return self.y[-1].strftime('%x %X')

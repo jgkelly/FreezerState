@@ -17,12 +17,13 @@ import os
 import sys
 import time
 import threading
+import argparse
 from datetime import datetime
 from os import listdir, system
 from flask import Flask, jsonify, render_template
 
 import freezerstate.config
-import argparse
+import freezerstate.conversion
 
 #from flask import Flask, jsonify
 #from flask.ext.cors import CORS
@@ -39,7 +40,7 @@ def index():
     template_data = {
         'location': freezerstate.CONFIG.LOCATION,
         'time': freezerstate.GRAPH.last_time(),
-        'temperature': freezerstate.GRAPH.last_temp()
+        'temperature': freezerstate.Conversion.TemperatureString(freezerstate.GRAPH.last_temp(), freezerstate.CONFIG.TEMPERATURE_UNITS, True)
     }
     return render_template('index.html', **template_data)
 
@@ -100,8 +101,8 @@ def main_thread(name):
 
     while True:
         temperature = get_temperature()
-        print(f'Time: {datetime.now()} - {temperature}°C')
-        freezerstate.GRAPH.plot(datetime.now(), temperature)
+        print(f'Time: {datetime.now()} - {freezerstate.Conversion.TemperatureString(temperature, freezerstate.CONFIG.TEMPERATURE_UNITS, True)}')
+        freezerstate.GRAPH.plot(datetime.now(), freezerstate.Conversion.UnitizedTemperature(temperature, freezerstate.CONFIG.TEMPERATURE_UNITS))
         freezerstate.NOTIFY.update(temperature)
         time.sleep(freezerstate.CONFIG.SAMPLE_FREQUENCY)
     return

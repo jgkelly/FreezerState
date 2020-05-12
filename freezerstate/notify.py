@@ -50,7 +50,7 @@ class Notifier:
         max_temp = self.to_farenheit(self.max_temperature) if self.units == 'farenheit' else self.max_temperature
         min_temp = self.to_farenheit(self.min_temperature) if self.units == 'farenheit' else self.min_temperature
         readingLocation = 'Temperature' if self.location is None else f'{self.location} temperature'
-        alert_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        alert_time = datetime.now().strftime('%x %X')
         level_change_description = self.change_description(temperature)
 
         if temperature >= self.max_temperature:
