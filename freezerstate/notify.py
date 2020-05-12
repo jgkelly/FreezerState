@@ -20,6 +20,7 @@ class Notifier:
         })
         self.alert_frequency = freezerstate.CONFIG.ALERT_FREQUENCY if test_enabled is None else 30
         self.last_alert = datetime.min
+        self.last_temperature = None
 
     def update(self, temperature):
 
@@ -35,6 +36,8 @@ class Notifier:
         self.last_alert = current_time
         message = self.get_notify_text(temperature)
 
+        self.last_temperature = temperature
+
         for x in self.notifiers:
             if x.enabled is True:
                 x.notify(message)
@@ -42,19 +45,32 @@ class Notifier:
         return True
 
     def get_notify_text(self, temperature):
-        unitvalue = self.unit_conversion[self.units.lower()]
+        unitvalue = self.unit_conversion[self.units]
         measurement = self.to_farenheit(temperature) if self.units == 'farenheit' else temperature
         max_temp = self.to_farenheit(self.max_temperature) if self.units == 'farenheit' else self.max_temperature
         min_temp = self.to_farenheit(self.min_temperature) if self.units == 'farenheit' else self.min_temperature
         readingLocation = 'Temperature' if self.location is None else f'{self.location} temperature'
         alert_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        level_change_description = change_description(temperature)
 
         if temperature >= self.max_temperature:
-            result = f'🌡🔥 {readingLocation} is above {max_temp}°{unitvalue} at {measurement}°{unitvalue}. Time: {alert_time}'
+            result = f'🌡🔥 {readingLocation} is above {max_temp}°{unitvalue} at {measurement}°{unitvalue}{level_change_description}. Time: {alert_time}'
         else:
-            result = f'🌡❄ {readingLocation} is below {min_temp}°{unitvalue} at {measurement}°{unitvalue}. Time: {alert_time}'
+            result = f'🌡❄ {readingLocation} is below {min_temp}°{unitvalue} at {measurement}°{unitvalue}{level_change_description}. Time: {alert_time}'
 
         return result
+
+    def change_description(self, temperature):
+        if (self.last_temperature is None):
+            return ''
+
+        if (temperature > self.last_temperature):
+            return ' ↗'
+
+        if (temperature < self.last_temperature):
+            return ' ↘'
+
+        return ' ➡'
 
     def to_farenheit(self, celsius):
         farenheit = round((celsius * 1.8) + 32.0, 1)
