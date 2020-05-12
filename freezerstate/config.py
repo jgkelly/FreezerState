@@ -9,12 +9,13 @@ config = configparser.ConfigParser()
 _CONFIG_DEFINITIONS = OrderedDict({
     #keyname, type, section, default
     'LOCATION': (str, 'Config', None),
+    'TEMPERATURE_UNITS': (str, 'Config', 'celsius'),
+    'SAMPLE_FREQUENCY': (int, 'Config', 1),          # Number of seconds between temperature samples
+    'ALERT_FREQUENCY': (int, 'Config', 30),          # Number of seconds allowed between alert notifications
     'MAX_TEMPERATURE': (int, 'Temperature', -15),    # Maximum Temperature (in Celsius)
     'ALERT_ON_MAX': (bool, 'Temperature', True),
     'MIN_TEMPERATURE': (int, 'Temperature', -99),     # Minimum Temperature (in Celsius)
     'ALERT_ON_MIN': (bool, 'Temperature', False),
-    'SAMPLE_FREQUENCY': (int, 'Temperature', 1),
-    'TEMPERATURE_UNITS': (str, 'Temperature', 'celsius'),
     'SMTP_ENABLED': (bool, "Email", False),
     'NOTIFICATION_EMAIL_ADDRESS': (str, 'Email', None),
     'SMTP_SERVER': (str, 'Email', None),

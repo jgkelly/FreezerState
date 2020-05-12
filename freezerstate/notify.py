@@ -3,6 +3,7 @@
 import freezerstate.config
 import freezerstate.notifiers.slack
 import freezerstate.notifiers.email
+from datetime import datetime, timedelta
 
 class Notifier:
     def __init__(self, test_enabled = None):
@@ -17,17 +18,24 @@ class Notifier:
             'celsius': ('C'),
             'farenheit': ('F')
         })
+        self.alert_frequency = freezerstate.CONFIG.ALERT_FREQUENCY
+        self.last_alert = datetime.min()
 
     def update(self, temperature):
 
         if temperature < self.max_temperature and temperature > self.min_temperature:
             return False
 
+        current_time = datetime.now
+        if (self.last_alert - current_time < self.alert_frequency):
+            print(f'--- It has been {self.last_alert - current_time} seconds since last alert. Skipping this alert')
+            return False
+
+        self.last_alert = current_time
+
         message = self.get_notify_text(temperature)
 
         for x in self.notifiers:
-            print(f'Notifier: {x.module} - Enabled: {x.enabled}')
-
             if x.enabled is True:
                 x.notify(message)
 
@@ -41,9 +49,9 @@ class Notifier:
         readingLocation = 'Temperature' if self.location is None else f'{self.location} temperature'
 
         if temperature >= self.max_temperature:
-            result = f'🌡🔥 {readingLocation} is above {max_temp}°{unitvalue} at {measurement}°{unitvalue}'
+            result = f'🌡🔥 {readingLocation} is above {max_temp}°{unitvalue} at {measurement}°{unitvalue}. Time: {datetime.now}'
         else:
-            result = f'🌡❄ {readingLocation} is below {min_temp}°{unitvalue} at {measurement}°{unitvalue}'
+            result = f'🌡❄ {readingLocation} is below {min_temp}°{unitvalue} at {measurement}°{unitvalue}. Time: {datetime.now}'
 
         return result
 
