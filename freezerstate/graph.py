@@ -29,6 +29,9 @@ class TemperatureGraph:
     def temperatures(self):
         return self.y
 
+    def times(self):
+        return self.x
+
     def sample_count(self):
         return len(self.x)
 
