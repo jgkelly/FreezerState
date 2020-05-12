@@ -11,11 +11,11 @@ def test_update_should_not_notify_if_temperature_is_in_range(notifier):
     assert result is False
 
 # def test_update_temperature_high(notifier):
-#     result = notifier.update(90)
+#     result = notifier.update(55.1)
 
 #     assert result is True
 
 # def test_update_temperature_low(notifier):
-#     result = notifier.update(-30)
+#     result = notifier.update(-30.5)
 
 #     assert result is True

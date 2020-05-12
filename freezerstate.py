@@ -27,8 +27,8 @@ import argparse
 
 #WAIT_INTERNAL = 0.2
 
-# system('modprobe w1-gpio')
-# system('modprobe w1-therm')
+system('modprobe w1-gpio')
+system('modprobe w1-therm')
 
 def raw_temperature():
     f = open(find_sensor(), 'r')

@@ -7,10 +7,10 @@ import freezerstate.notifiers.email
 class Notifier:
     def __init__(self, test_enabled = None):
         self.module = '[Notifier]'
-        self.location = freezerstate.config.LOCATION if test_enabled is None else 'Test Fixture'
-        self.min_temperature = freezerstate.config.MIN_TEMPERATURE if test_enabled is None else -10
-        self.max_temperature = freezerstate.config.MAX_TEMPERATURE if test_enabled is None else 55
-        self.units = freezerstate.config.temperature_units if test_enabled is None else 'celsius'
+        self.location = freezerstate.CONFIG.LOCATION if test_enabled is None else 'Test Fixture'
+        self.min_temperature = freezerstate.CONFIG.MIN_TEMPERATURE if test_enabled is None else -10
+        self.max_temperature = freezerstate.CONFIG.MAX_TEMPERATURE if test_enabled is None else 55
+        self.units = freezerstate.CONFIG.TEMPERATURE_UNITS if test_enabled is None else 'celsius'
         self.notifiers = [freezerstate.notifiers.slack.SlackSender(test_enabled, None if test_enabled is None else 'https://hooks.slack.com/services/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'),
                           freezerstate.notifiers.email.EmailSender(test_enabled, None if test_enabled is None else 'mail.google.com')]
         self.unit_conversion = ({
@@ -35,7 +35,7 @@ class Notifier:
 
     def get_notify_text(self, temperature):
         unitvalue = self.unit_conversion[self.units]
-        measurement = to_farenheit(temperature) if self.units is 'farenheit' else temperature
+        measurement = to_farenheit(temperature) if self.units == 'farenheit' else temperature
         readingLocation = 'Temperature' if self.location is None else f'{self.location} temperature'
 
         if temperature >= self.max_temperature:
