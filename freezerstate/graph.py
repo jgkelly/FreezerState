@@ -28,7 +28,7 @@ class TemperatureGraph:
             print(f'-- X Count: {len(self.x)} - Y Count: {len(self.y)}')
 
     def temperatures(self):
-        return numpy.array(self.temperatures)
+        return numpy.array(self.y)
 
     def sample_count(self):
         return len(self.y)
