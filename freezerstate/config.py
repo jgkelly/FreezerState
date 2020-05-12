@@ -12,6 +12,7 @@ _CONFIG_DEFINITIONS = OrderedDict({
     'ALERT_ON_MAX': (bool, 'Temperature', True),
     'MIN_TEMPERATURE': (int, 'Temperature', -99),     # Minimum Temperature (in Celsius)
     'ALERT_ON_MIN': (bool, 'Temperature', False),
+    'SAMPLE_FREQUENCY': (int, 'Temperature', 1),
     'SMTP_ENABLED': (bool, "Email", False),
     'NOTIFICATION_EMAIL_ADDRESS': (str, 'Email', None),
     'SMTP_SERVER': (str, 'Email', None),
