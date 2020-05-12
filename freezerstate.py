@@ -16,6 +16,7 @@ Licensed under the MIT license scheme
 import os
 import sys
 import time
+import threading
 from datetime import datetime
 from os import listdir, system
 from flask import Flask, jsonify, render_template
@@ -66,7 +67,7 @@ def get_temperature():
         celsius = round(float(output_temperature) / 1000.0, 1)
         return celsius
 
-def main():
+def main_thread(name):
     if hasattr(sys, 'frozen'):
         freezerstate.FULL_PATH = os.path.abspath(sys.executable)
     else:
@@ -105,5 +106,6 @@ def main():
     return
 
 if __name__ == "__main__":
+    x = threading.Thread(target=main_thread, args=(1,))
+    x.start()
     app.run(host='0.0.0.0', port=80, debug=False)
-    main()
