@@ -27,13 +27,12 @@ class Notifier:
             return False
 
         current_time = datetime.now()
-        difference = self.last_alert - current_time
+        difference = current_time - self.last_alert
         if (difference.total_seconds() < self.alert_frequency):
-            print(f'--- It has been {difference.total_seconds()} seconds since last alert. Skipping this alert')
+            print(f'--- It has been {difference.total_seconds()} seconds since last alert. Frequency is {self.alert_frequency}. Skipping this alert')
             return False
 
         self.last_alert = current_time
-
         message = self.get_notify_text(temperature)
 
         for x in self.notifiers:
@@ -43,16 +42,17 @@ class Notifier:
         return True
 
     def get_notify_text(self, temperature):
-        unitvalue = self.unit_conversion[self.units]
+        unitvalue = self.unit_conversion[self.units.lower()]
         measurement = self.to_farenheit(temperature) if self.units == 'farenheit' else temperature
         max_temp = self.to_farenheit(self.max_temperature) if self.units == 'farenheit' else self.max_temperature
         min_temp = self.to_farenheit(self.min_temperature) if self.units == 'farenheit' else self.min_temperature
         readingLocation = 'Temperature' if self.location is None else f'{self.location} temperature'
+        alert_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
         if temperature >= self.max_temperature:
-            result = f'🌡🔥 {readingLocation} is above {max_temp}°{unitvalue} at {measurement}°{unitvalue}. Time: {datetime.now}'
+            result = f'🌡🔥 {readingLocation} is above {max_temp}°{unitvalue} at {measurement}°{unitvalue}. Time: {alert_time}'
         else:
-            result = f'🌡❄ {readingLocation} is below {min_temp}°{unitvalue} at {measurement}°{unitvalue}. Time: {datetime.now}'
+            result = f'🌡❄ {readingLocation} is below {min_temp}°{unitvalue} at {measurement}°{unitvalue}. Time: {alert_time}'
 
         return result
 
