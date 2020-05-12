@@ -88,6 +88,7 @@ def main():
     while True:
         temperature = get_temperature()
         print(f'Time: {datetime.now()} - {temperature}°C')
+        freezerstate.GRAPH.plot(datetime.now(), temperature)
         freezerstate.NOTIFY.update(temperature)
         time.sleep(freezerstate.CONFIG.SAMPLE_FREQUENCY)
     return
