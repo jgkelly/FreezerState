@@ -14,13 +14,16 @@ Licensed under the MIT license scheme
 """
 
 import os
+import io
 import sys
 import time
 import threading
 import argparse
 from datetime import datetime
 from os import listdir, system
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, make_response
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
 
 import freezerstate.config
 import freezerstate.conversion
@@ -39,6 +42,25 @@ def index():
         'units': freezerstate.CONVERSION.UnitString()
         }
     return render_template('index.html', **template_data)
+
+@app.route('/plot/temp')
+def plot_temp():
+    self_lock = threading.Lock()
+    with self_lock:
+        fig = Figure()
+        ys = freezerstate.GRAPH.temperatures()
+        axis = fig.add_subplot(1, 1, 1)
+        axis.set_title(f'Temperature ({freezerstate.conversion.UnitString()})')
+        axis.set_xlabel('samples')
+        axis.grid(True)
+        xs = range(freezerstate.GRAPH.sample_count())
+        axis.plot(xs, ys)
+        canvas = FigureCanvas(fig)
+        output = io.BytesIO()
+        canvas.print_png(output)
+        response = make_response(output.getvalue)
+        response.mimetype = 'image/png'
+        return response
 
 def raw_temperature():
     f = open(find_sensor(), 'r')

@@ -4,6 +4,7 @@
 # This file is part of freezerstate.
 
 import freezerstate.config
+import threading
 
 class TemperatureGraph:
 
@@ -14,14 +15,22 @@ class TemperatureGraph:
 
 
     def plot(self, x, y):
-        if (len(self.x) > self.max_data_points):
-            self.x.pop(0)
-            self.y.pop(0)
+        self_lock = threading.Lock()
+        with self_lock:
+            if (len(self.x) > self.max_data_points):
+                self.x.pop(0)
+                self.y.pop(0)
 
-        self.x.append(x)
-        self.y.append(y)
+            self.x.append(x)
+            self.y.append(y)
 
-        print(f'-- X Count: {len(self.x)} - Y Count: {len(self.y)}')
+            print(f'-- X Count: {len(self.x)} - Y Count: {len(self.y)}')
+
+    def temperatures(self):
+        return self.temperatures
+
+    def sample_count(self):
+        return len(self.x)
 
     def last_time(self):
         return self.x[-1]

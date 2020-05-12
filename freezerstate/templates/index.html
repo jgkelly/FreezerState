@@ -6,7 +6,10 @@
    <body>
 	<h1>{{ location }} Sensor Data </h1>
 	<h3> Temperature: {{ temperature  }}{{ units }}</h3>
-	<hr>
+   <hr>
+   <h3>Historical Data:</h3>
+   <img src="/plot/temp" alt="Temperature History" width="80%">
+   <hr>
 	<h3> Last Sensor Reading: {{ time }}    <a href="/"class="button">REFRESH</a></h3>
    </body>
 </html>
