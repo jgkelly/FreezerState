@@ -5,18 +5,6 @@
    <link rel="stylesheet" href='../static/style.css' />
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700' rel='stylesheet' type='text/css'>
-   <style>
-      body {
-         text-align: center;
-      }
-
-      #g1 {
-         width: 200px;
-         height: 160px;
-         display: inline-block;
-         margin: 1em;
-      }
-   </style>
 </head>
 
 <body>
@@ -25,7 +13,7 @@
    <h3> Temperature: {{ temperature  }}{{ units }}</h3>
    <hr>
    <h3>Historical Data:</h3>
-   <img src="/plot/temp" alt="Temperature History" class="cover" width="640" height="480">
+   <img src="/plot/temp" alt="Temperature History" class="cover" width="1200" height="500">
    <hr>
    <h3>Last Sensor Reading: {{ time }}</h3>
    <h3><a href="/" class="button">Refresh</a></h3>
@@ -37,7 +25,7 @@
          g1 = new JustGage({
             id: "g1",
             value: {{ temperature }},
-            valueFontColor: "yellow",
+            valueFontColor: "black",
             min: {{ min_temperature }},
             max: {{ max_temperature}},
             title: "Temperature",

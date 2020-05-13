@@ -1,4 +1,5 @@
 body{
+	text-align: center;
 	font-size: 10px;
 	font-family: 'Open Sans Condensed', sans-serif;
 	background: #FFFFFF;
@@ -18,6 +19,12 @@ body{
 }
 .cover {
 	object-fit: cover;
-	width: 700px;
+	width: 1300px;
 	height: 500px;
 }
+#g1 {
+	width: 400px;
+	height: 320px;
+	display: inline-block;
+	margin: 1em;
+ }
