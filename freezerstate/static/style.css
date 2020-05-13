@@ -17,7 +17,7 @@ body{
 	border-width: 0.3rem;
 	border-radius: 5px;
 	border-style: solid;
-	padding: 4%;
+	width: 10%;
 }
 .cover {
 	object-fit: cover;
