@@ -7,15 +7,14 @@ body{
 	padding:1%
 }
 .button {
-	font: bold 15px Arial;
+	font: bold 20px 'Open Sans Condensed';
+	font-weight: 500;
 	text-decoration: none;
+	text-align: center;
 	background-color: #a1cb00;
-	color: ##ffffff;
-	padding: 2px 6px 2px 6px;
-	border-top: 1px solid #CCCCCC;
-	border-right: 1px solid #333333;
-	border-bottom: 1px solid #333333;
-	border-left: 1px solid #CCCCCC;
+	border-width: 0.3rem;
+	border-radius: 5px;
+	border-style: solid;
 }
 .cover {
 	object-fit: cover;
