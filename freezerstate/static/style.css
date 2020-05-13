@@ -12,9 +12,12 @@ body{
 	text-decoration: none;
 	text-align: center;
 	background-color: #a1cb00;
+	color: #000000;
+	border-color: #a1cb00;
 	border-width: 0.3rem;
 	border-radius: 5px;
 	border-style: solid;
+	padding: 4%;
 }
 .cover {
 	object-fit: cover;
