@@ -17,8 +17,8 @@ body{
 	border-width: 0.3rem;
 	border-radius: 5px;
 	border-style: solid;
-	width: 144px;
-	height: 72px;
+	width: 100%;
+	height: 100%;
 }
 .cover {
 	object-fit: cover;
@@ -31,3 +31,7 @@ body{
 	display: inline-block;
 	margin: 1em;
  }
+#bottombutton {
+	width: 144px;
+	height: 72px;
+}
