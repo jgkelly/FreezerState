@@ -1,13 +1,15 @@
 body{
-	background: black;
-	color: grey;
+	font-size: 10px;
+	font-family: 'Open Sans Condensed', sans-serif;
+	background: #FFFFFF;
+	color: #000000;
 	padding:1%
 }
 .button {
 	font: bold 15px Arial;
 	text-decoration: none;
-	background-color: #EEEEEE;
-	color: #333333;
+	background-color: #a1cb00;
+	color: ##ffffff;
 	padding: 2px 6px 2px 6px;
 	border-top: 1px solid #CCCCCC;
 	border-right: 1px solid #333333;

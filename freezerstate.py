@@ -40,7 +40,9 @@ def index():
         'location': freezerstate.CONFIG.LOCATION,
         'time': freezerstate.GRAPH.last_time(),
         'temperature': freezerstate.GRAPH.last_temp(),
-        'units': freezerstate.CONVERSION.UnitString()
+        'units': freezerstate.CONVERSION.UnitString(),
+        'min_temperature': freezerstate.CONVERSION.UnitizedTemperature(-40),
+        'max_temperature': freezerstate.CONVERSION.UnitizedTemperature(50)
         }
     return render_template('index.html', **template_data)
 
@@ -96,7 +98,6 @@ def main_thread(name):
         freezerstate.FULL_PATH = os.path.abspath(__file__)
 
     freezerstate.PROG_DIR = os.path.dirname(freezerstate.FULL_PATH)
-
     freezerstate.ARGS = sys.argv[1:]
 
     parser = argparse.ArgumentParser(description='Temperature monitor and alerter')
