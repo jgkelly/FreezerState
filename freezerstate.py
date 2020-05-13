@@ -14,21 +14,57 @@ Licensed under the MIT license scheme
 """
 
 import os
+import io
 import sys
 import time
+import threading
+import argparse
+import numpy
 from datetime import datetime
 from os import listdir, system
+from flask import Flask, jsonify, render_template, make_response
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
 
 import freezerstate.config
-import argparse
-
-#from flask import Flask, jsonify
-#from flask.ext.cors import CORS
-
-#WAIT_INTERNAL = 0.2
+import freezerstate.conversion
 
 system('modprobe w1-gpio')
 system('modprobe w1-therm')
+
+app = Flask('freezerstate')
+
+@app.route("/")
+def index():
+    template_data = {
+        'location': freezerstate.CONFIG.LOCATION,
+        'time': freezerstate.GRAPH.last_time(),
+        'temperature': freezerstate.GRAPH.last_temp(),
+        'units': freezerstate.CONVERSION.UnitString(),
+        'min_temperature': freezerstate.CONVERSION.UnitizedTemperature(freezerstate.RANGE_MIN),
+        'max_temperature': freezerstate.CONVERSION.UnitizedTemperature(freezerstate.RANGE_MAX)
+        }
+    return render_template('index.html', **template_data)
+
+@app.route('/plot/temp')
+def plot_temp():
+    self_lock = threading.Lock()
+    with self_lock:
+        fig = Figure(figsize=(10, 8), dpi=100)
+        ys = numpy.array(freezerstate.GRAPH.temperatures())
+        axis = fig.add_subplot(1, 1, 1)
+        axis.set_title(f'{freezerstate.CONFIG.LOCATION} Temperature History')
+        axis.set_ylabel(f'Temperature ({freezerstate.CONVERSION.UnitString()})')
+        axis.set_xlabel('Time')
+        axis.grid(True)
+        xs = numpy.array(freezerstate.GRAPH.times())
+        axis.plot(xs, ys)
+        canvas = FigureCanvas(fig)
+        output = io.BytesIO()
+        canvas.print_png(output)
+        response = make_response(output.getvalue())
+        response.mimetype = 'image/png'
+        return response
 
 def raw_temperature():
     f = open(find_sensor(), 'r')
@@ -55,14 +91,13 @@ def get_temperature():
         celsius = round(float(output_temperature) / 1000.0, 1)
         return celsius
 
-def main():
+def main_thread(name):
     if hasattr(sys, 'frozen'):
         freezerstate.FULL_PATH = os.path.abspath(sys.executable)
     else:
         freezerstate.FULL_PATH = os.path.abspath(__file__)
 
     freezerstate.PROG_DIR = os.path.dirname(freezerstate.FULL_PATH)
-
     freezerstate.ARGS = sys.argv[1:]
 
     parser = argparse.ArgumentParser(description='Temperature monitor and alerter')
@@ -87,10 +122,14 @@ def main():
 
     while True:
         temperature = get_temperature()
-        print(f'Time: {datetime.now()} - {temperature}°C')
+
+        print(f'Time: {datetime.now()} - {freezerstate.CONVERSION.TemperatureString(temperature, True)}')
+        freezerstate.GRAPH.plot(datetime.now(), freezerstate.CONVERSION.UnitizedTemperature(temperature))
         freezerstate.NOTIFY.update(temperature)
         time.sleep(freezerstate.CONFIG.SAMPLE_FREQUENCY)
     return
 
 if __name__ == "__main__":
-    main()
+    x = threading.Thread(target=main_thread, args=(1,))
+    x.start()
+    app.run(host='0.0.0.0', port=80, debug=False)

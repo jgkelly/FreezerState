@@ -33,8 +33,16 @@ Configuration values for your environment and preferences are available in the c
 The Temperature section contains the minimum and maximum alerting values, and whether the value should trigger an alert when reached.
 
 - `max_temperature` and `alert_on_max` control the maximum temperature (in degrees Celsius), and whether or not an alert is to be sent when the value specified in `max_temperature` is reached, or is greater.
-
 - `min_temperature` and `alert_on_min` control the minimum temperature (in degrees Celsius), and whether or not an alert is to be sent when the value specified in `min_temperature` is reached or is lower.
+
+### Config Section
+
+This section contains the global configuration values
+
+- `locaton` - String description of the temperature being monitored. This will be included in the alert notifications. Example: "Pool", "Freezer", "Air Conditioner". Default is None
+- `temperature_units` - Units the measurements are to be displayed in. Accepted values are: "celsius" and "farenheit". Default is `celsius`.
+- `sample_frequency` - Time (in seconds) between each temperature sample. Default is 1
+- `alert_frequency` - Minimum time (in seconds) to wait between notifications. Default is 30
 
 ### Slack Section
 

@@ -3,6 +3,7 @@ from collections import OrderedDict
 import configparser
 import codecs
 import os
+import socket
 
 config = configparser.ConfigParser()
 
@@ -12,6 +13,8 @@ _CONFIG_DEFINITIONS = OrderedDict({
     'TEMPERATURE_UNITS': (str, 'Config', 'celsius'),
     'SAMPLE_FREQUENCY': (int, 'Config', 1),          # Number of seconds between temperature samples
     'ALERT_FREQUENCY': (int, 'Config', 30),          # Number of seconds allowed between alert notifications
+    'GRAPH_DATA_POINTS': (int, 'Config', 14400),
+    'DEVICE_ADDRESS': (str, 'Config', None),
     'MAX_TEMPERATURE': (int, 'Temperature', -15),    # Maximum Temperature (in Celsius)
     'ALERT_ON_MAX': (bool, 'Temperature', True),
     'MIN_TEMPERATURE': (int, 'Temperature', -99),     # Minimum Temperature (in Celsius)
@@ -32,7 +35,15 @@ class Config():
 
     def read(self):
         self.config_vals()
+        self.set_local_defaults()
         return self
+
+    def set_local_defaults(self):
+        if (self.DEVICE_ADDRESS is not None):
+            return
+
+        host_name = socket.gethostname()
+        deviceAddress = host_name
 
     def config_vals(self):
         if os.path.isfile(self.config_file):
