@@ -18,9 +18,11 @@ CONFIG_FILE = None
 NOTIFY = None
 GRAPH = None
 CONVERSION = None
+RANGE_MIN = -40
+RANGE_MAX = 50
 
 def initialize(config_file):
-    global CONFIG, CONFIG_FILE, DEVICE_FOLDER, DEVICE_SUFFIX, DATA_DIR, ARGS, NOTIFY, GRAPH, CONVERSION
+    global CONFIG, CONFIG_FILE, DEVICE_FOLDER, DEVICE_SUFFIX, DATA_DIR, ARGS, NOTIFY, GRAPH, CONVERSION, RANGE_MIN, RANGE_MAX
 
     cfg = freezerstate.config.Config(config_file)
     CONFIG = cfg.read();
@@ -28,6 +30,9 @@ def initialize(config_file):
     CONVERSION = freezerstate.conversion.Conversion()
     NOTIFY = freezerstate.notify.Notifier()
     GRAPH = freezerstate.graph.TemperatureGraph()
+
+    RANGE_MIN = freezerstate.CONFIG.MIN_TEMPERATURE - 10
+    RANGE_MAX = freezerstate.CONFIG_MAX_TEMPERATURE + 10
 
     assert CONFIG is not None
     return True

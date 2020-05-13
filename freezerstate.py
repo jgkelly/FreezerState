@@ -41,8 +41,8 @@ def index():
         'time': freezerstate.GRAPH.last_time(),
         'temperature': freezerstate.GRAPH.last_temp(),
         'units': freezerstate.CONVERSION.UnitString(),
-        'min_temperature': freezerstate.CONVERSION.UnitizedTemperature(-40),
-        'max_temperature': freezerstate.CONVERSION.UnitizedTemperature(50)
+        'min_temperature': freezerstate.CONVERSION.UnitizedTemperature(freezerstate.RANGE_MIN),
+        'max_temperature': freezerstate.CONVERSION.UnitizedTemperature(freezerstate.RANGE_MAX)
         }
     return render_template('index.html', **template_data)
 
