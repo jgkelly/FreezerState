@@ -32,7 +32,7 @@ def initialize(config_file):
     GRAPH = freezerstate.graph.TemperatureGraph()
 
     RANGE_MIN = freezerstate.CONFIG.MIN_TEMPERATURE - 10
-    RANGE_MAX = freezerstate.CONFIG_MAX_TEMPERATURE + 10
+    RANGE_MAX = freezerstate.CONFIG.MAX_TEMPERATURE + 10
 
     assert CONFIG is not None
     return True
