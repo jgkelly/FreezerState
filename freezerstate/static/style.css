@@ -22,11 +22,6 @@ body{
 	height: 75px;
 	display: table-cell;
 }
-.cover {
-	object-fit: cover;
-	width: 25%;
-	height: 100%;
-}
 #g1 {
 	margin: 1em;
  }
@@ -40,4 +35,7 @@ body{
 #spacer {
 	width: 25%;
 	display: inline-block;
+}
+#graph {
+	height: 500px;
 }
