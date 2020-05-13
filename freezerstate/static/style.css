@@ -28,9 +28,6 @@ body{
 	height: 100%;
 }
 #g1 {
-	width: 400px;
-	height: 320px;
-	display: inline-block;
 	margin: 1em;
  }
 #bottombutton {
