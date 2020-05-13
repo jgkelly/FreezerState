@@ -43,10 +43,7 @@ class Config():
             return
 
         host_name = socket.gethostname()
-        host_ip = socket.gethostbyname(host_name)
-        print(f'Host Name: {host_name} - IP Address: {host_ip}')
-
-        deviceAddress = host_ip
+        deviceAddress = host_name
 
     def config_vals(self):
         if os.path.isfile(self.config_file):
