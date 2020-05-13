@@ -50,7 +50,7 @@ def index():
 def plot_temp():
     self_lock = threading.Lock()
     with self_lock:
-        fig = Figure(figsize=(12, 5), dpi=100)
+        fig = Figure(figsize=(12, 4), dpi=100)
         ys = numpy.array(freezerstate.GRAPH.temperatures())
         axis = fig.add_subplot(1, 1, 1)
         axis.set_title(f'{freezerstate.CONFIG.LOCATION} Temperature History')

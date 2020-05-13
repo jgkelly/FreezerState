@@ -19,8 +19,8 @@ body{
 }
 .cover {
 	object-fit: cover;
-	width: 1300px;
-	height: 500px;
+	width: 95%;
+	height: 100%;
 }
 #g1 {
 	width: 400px;
