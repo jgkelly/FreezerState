@@ -2,7 +2,6 @@
 
 import freezerstate.config
 import freezerstate.notifiers.slack
-import freezerstate.notifiers.email
 from datetime import datetime, timedelta
 
 class Notifier:
