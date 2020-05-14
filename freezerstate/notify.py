@@ -50,8 +50,7 @@ class Notifier:
 
     def send_status_update(self, temperature, current_time):
         readingLocation = self.reading_location()
-        uptime = current_time - freezerstate.START_TIME
-        message = f'🌡⏰ {readingLocation} status update. Current temperature is {freezerstate.CONVERSION.TemperatureString(temperature), True}. Uptime: {uptime.total_seconds // 3600} hours. IP Address: {freezerstate.CONFIG.DEVICE_ADDRESS}'
+        message = f'🌡⏰ {readingLocation} status update. Current temperature is {freezerstate.CONVERSION.TemperatureString(temperature), True}.'
         print(f'--- {current_time}: Sending uptime notification')
         self.send_all_notifiers(message)
 
