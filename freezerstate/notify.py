@@ -12,8 +12,7 @@ class Notifier:
         self.min_temperature = freezerstate.CONFIG.MIN_TEMPERATURE
         self.max_temperature = freezerstate.CONFIG.MAX_TEMPERATURE
         self.units = freezerstate.CONFIG.TEMPERATURE_UNITS.lower()
-        self.notifiers = [freezerstate.notifiers.slack.SlackSender(),
-                          freezerstate.notifiers.email.EmailSender()]
+        self.notifiers = [freezerstate.notifiers.slack.SlackSender()]
         self.unit_conversion = ({
             'celsius': ('C'),
             'farenheit': ('F')
