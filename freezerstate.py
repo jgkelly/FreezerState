@@ -118,8 +118,7 @@ def main_thread(name):
     print (f'Loading configuration from: {freezerstate.CONFIG_FILE}')
     freezerstate.initialize(freezerstate.CONFIG_FILE)
 
-    print (f'--- Host address: {freezerstate.CONFIG.DEVICE_ADDRESS}')
-    print ('Getting temperature...')
+    print ('Monitoring temperature...')
 
     while True:
         temperature = get_temperature()
