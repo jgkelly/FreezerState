@@ -24,8 +24,6 @@ class TemperatureGraph:
             self.x.append(x)
             self.y.append(y)
 
-            print(f'-- X Count: {len(self.x)} - Y Count: {len(self.y)}')
-
     def temperatures(self):
         return self.y
 
