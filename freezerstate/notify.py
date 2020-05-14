@@ -24,7 +24,7 @@ class Notifier:
 
     def update(self, temperature):
         current_time = datetime.now()
-        if (status_update_times.should_notify(current_time)):
+        if (self.status_update_times.should_notify(current_time)):
             self.send_status_update(temperature, current_time)
 
         if temperature < self.max_temperature and temperature > self.min_temperature:
