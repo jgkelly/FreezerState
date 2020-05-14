@@ -23,13 +23,12 @@ class Notifier:
         self.last_temperature = None
 
     def update(self, temperature):
-
-        if temperature < self.max_temperature and temperature > self.min_temperature:
-            return False
-
         current_time = datetime.now()
         if (status_update_times.should_notify(current_time)):
             self.send_status_update(temperature, current_time)
+
+        if temperature < self.max_temperature and temperature > self.min_temperature:
+            return False
 
         difference = current_time - self.last_alert
         if (difference.total_seconds() < self.alert_frequency):
