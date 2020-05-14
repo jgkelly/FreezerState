@@ -22,14 +22,9 @@ class StatusUpdate:
 
         test_text = test_time.strftime('%H:%M')
 
-        print(f'+++ Checking if we should notify: Time: {test_text}')
-
         for x in self.notification_times:
             if x.tm_hour == time_value.hour and x.tm_min == time_value.minute:
-                print('+++ +Time match - sending True')
                 return True
-
-        print('+++ -Time not matching - sending False')
         return False
 
     def load_times(self, times):
