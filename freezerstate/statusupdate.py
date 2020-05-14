@@ -4,8 +4,9 @@ import freezerstate.config
 import time
 import datetime
 
+
 class StatusUpdate:
-    def __init__(self, test_enabled = None, test_times = None):
+    def __init__(self, test_enabled=None, test_times=None):
         self.module = '[StatusUpdate]'
         self.notification_times = []
         notify_times = freezerstate.CONFIG.STATUS_CHECK_TIMES if test_enabled is None else test_times
@@ -16,11 +17,19 @@ class StatusUpdate:
         test_time = time_value
 
         if (type(time_value) == datetime.datetime):
-            test_time = time_value.time()#time(hour = time_value.hour, minute = time_value.minute)
+            # time(hour = time_value.hour, minute = time_value.minute)
+            test_time = time_value.time()
+
+        test_text = test_time.strftime('%H:%M')
+
+        print(f'+++ Checking if we should notify: Time: {test_text}')
 
         for x in self.notification_times:
             if x.tm_hour == time_value.hour and x.tm_min == time_value.minute:
+                print('+++ +Time match - sending True')
                 return True
+
+        print('+++ -Time not matching - sending False')
         return False
 
     def load_times(self, times):
