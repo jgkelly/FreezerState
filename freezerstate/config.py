@@ -16,6 +16,7 @@ _CONFIG_DEFINITIONS = OrderedDict({
     'GRAPH_DATA_POINTS': (int, 'Config', 14400),
     'DEVICE_ADDRESS': (str, 'Config', None),
     'STATUS_CHECK_TIMES': (str, 'Config', None),
+    'DATE_TIME_STAMP_FORMAT': (str, 'Config', '%m/%d/%Y %X'),
     'MAX_TEMPERATURE': (int, 'Temperature', -15),    # Maximum Temperature (in Celsius)
     'ALERT_ON_MAX': (bool, 'Temperature', True),
     'MIN_TEMPERATURE': (int, 'Temperature', -99),     # Minimum Temperature (in Celsius)

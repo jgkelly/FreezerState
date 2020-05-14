@@ -57,7 +57,7 @@ class Notifier:
             return False
 
         readingLocation = self.reading_location()
-        timestring = current_time.strftime('%x %X')
+        timestring = current_time.strftime(freezerstate.CONFIG.DATE_TIME_STAMP_FORMAT)
         message = f'🌡⏰ {readingLocation} status update. Current temperature at {timestring} is {freezerstate.CONVERSION.TemperatureString(temperature, True)}.'
         print(f'--- {current_time}: Sending uptime notification')
         self.last_notify = current_time
@@ -70,7 +70,7 @@ class Notifier:
 
     def get_notify_text(self, temperature):
         readingLocation = self.reading_location()
-        alert_time = datetime.now().strftime('%x %X')
+        alert_time = datetime.now().strftime(freezerstate.CONFIG.DATE_TIME_STAMP_FORMAT)
         level_change_description = self.change_description(temperature)
 
         if temperature >= self.max_temperature:
