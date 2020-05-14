@@ -133,7 +133,7 @@ def main_thread(name):
         temperature = get_temperature()
 
         print(
-            f'Time: {datetime.now()} - {freezerstate.CONVERSION.TemperatureString(temperature, True)}')
+            f'Time: {datetime.now()} : {freezerstate.CONVERSION.TemperatureString(temperature, True)}')
         freezerstate.GRAPH.plot(
             datetime.now(), freezerstate.CONVERSION.UnitizedTemperature(temperature))
         freezerstate.NOTIFY.update(temperature)
