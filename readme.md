@@ -26,7 +26,7 @@ This project was written under Python 3.8 or greater. It was developed under Pyt
 Currently, you will need to run this in the same folder as freezerstate.py:
 
 ```
-python freezerstate.py
+sudo python3 freezerstate.py
 ```
 
 ## Configuration
