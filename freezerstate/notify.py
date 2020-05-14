@@ -63,7 +63,7 @@ class Notifier:
         timestring = current_time.strftime(
             freezerstate.CONFIG.DATE_TIME_STAMP_FORMAT)
 
-        message = f'*{readingLocation}* status update.\n🌡 {freezerstate.CONVERSION.TemperatureString(temperature, True)} ⏰ {timestring}.'
+        message = f'*{readingLocation}* status update.\n🌡 {freezerstate.CONVERSION.TemperatureString(temperature, True)}\n⏰ {timestring}.'
         print(f'--- {current_time}: Sending uptime notification')
         self.last_notify = current_time
         self.send_all_notifiers(message)
