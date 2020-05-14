@@ -20,10 +20,10 @@ _CONFIG_DEFINITIONS = OrderedDict({
     'STATUS_CHECK_TIMES': (str, 'Config', None),
     'DATE_TIME_STAMP_FORMAT': (str, 'Config', '%m/%d/%Y %X'),
     # Maximum Temperature (in Celsius)
-    'MAX_TEMPERATURE': (int, 'Temperature', -15),
+    'MAX_TEMPERATURE': (int, 'Temperature', 40),
     'ALERT_ON_MAX': (bool, 'Temperature', True),
     # Minimum Temperature (in Celsius)
-    'MIN_TEMPERATURE': (int, 'Temperature', -99),
+    'MIN_TEMPERATURE': (int, 'Temperature', -40),
     'ALERT_ON_MIN': (bool, 'Temperature', False),
     'SMTP_ENABLED': (bool, "Email", False),
     'NOTIFICATION_EMAIL_ADDRESS': (str, 'Email', None),
