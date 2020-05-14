@@ -20,6 +20,7 @@ class Notifier:
         self.alert_frequency = freezerstate.CONFIG.ALERT_FREQUENCY
         self.status_update_times = freezerstate.statusupdate.StatusUpdate()
         self.last_alert = datetime.min
+        self.last_notify = datetime.min
         self.last_temperature = None
 
     def update(self, temperature):
@@ -49,10 +50,17 @@ class Notifier:
                 x.notify(message)
 
     def send_status_update(self, temperature, current_time):
+
+        difference = current_time - self.last_notify;
+        if (difference.total_seconds() <= 60):
+            print(f'--- It has been {difference.total_seconds()} seconds since last status update. Skipping status update')
+            return False
+
         readingLocation = self.reading_location()
         timestring = current_time.strftime('%x %X')
         message = f'🌡⏰ {readingLocation} status update. Current temperature at {timestring} is {freezerstate.CONVERSION.TemperatureString(temperature, True)}.'
         print(f'--- {current_time}: Sending uptime notification')
+        self.last_notify = current_time
         self.send_all_notifiers(message)
 
     def reading_location(self):
