@@ -5,6 +5,7 @@ import freezerstate.notifiers.slack
 import freezerstate.statusupdate
 from datetime import datetime, timedelta
 
+
 class Notifier:
     def __init__(self):
         self.module = '[Notifier]'
@@ -33,7 +34,8 @@ class Notifier:
 
         difference = current_time - self.last_alert
         if (difference.total_seconds() < self.alert_frequency):
-            print(f'--- It has been {difference.total_seconds()} seconds since last alert. Frequency is {self.alert_frequency}. Skipping this alert')
+            print(
+                f'--- It has been {difference.total_seconds()} seconds since last alert. Frequency is {self.alert_frequency}. Skipping this alert')
             return False
 
         self.last_alert = current_time
@@ -51,13 +53,15 @@ class Notifier:
 
     def send_status_update(self, temperature, current_time):
 
-        difference = current_time - self.last_notify;
+        difference = current_time - self.last_notify
         if (difference.total_seconds() <= 60):
-            print(f'--- It has been {difference.total_seconds()} seconds since last status update. Skipping status update')
+            print(
+                f'--- It has been {difference.total_seconds()} seconds since last status update. Skipping status update')
             return False
 
         readingLocation = self.reading_location()
-        timestring = current_time.strftime(freezerstate.CONFIG.DATE_TIME_STAMP_FORMAT)
+        timestring = current_time.strftime(
+            freezerstate.CONFIG.DATE_TIME_STAMP_FORMAT)
         message = f'🌡⏰ {readingLocation} status update. Current temperature at {timestring} is {freezerstate.CONVERSION.TemperatureString(temperature, True)}.'
         print(f'--- {current_time}: Sending uptime notification')
         self.last_notify = current_time
@@ -66,7 +70,6 @@ class Notifier:
     def reading_location(self):
         readingLocation = 'Temperature' if self.location is None else f'{self.location} temperature'
         return readingLocation
-
 
     def get_notify_text(self, temperature):
         readingLocation = self.reading_location()
