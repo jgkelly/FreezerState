@@ -34,6 +34,7 @@ system('modprobe w1-therm')
 
 app = Flask('freezerstate')
 
+
 @app.route("/")
 def index():
     template_data = {
@@ -43,8 +44,9 @@ def index():
         'units': freezerstate.CONVERSION.UnitString(),
         'min_temperature': freezerstate.CONVERSION.UnitizedTemperature(freezerstate.RANGE_MIN),
         'max_temperature': freezerstate.CONVERSION.UnitizedTemperature(freezerstate.RANGE_MAX)
-        }
+    }
     return render_template('index.html', **template_data)
+
 
 @app.route('/plot/temp')
 def plot_temp():
@@ -54,7 +56,8 @@ def plot_temp():
         ys = numpy.array(freezerstate.GRAPH.temperatures())
         axis = fig.add_subplot(1, 1, 1)
         axis.set_title(f'{freezerstate.CONFIG.LOCATION} Temperature History')
-        axis.set_ylabel(f'Temperature ({freezerstate.CONVERSION.UnitString()})')
+        axis.set_ylabel(
+            f'Temperature ({freezerstate.CONVERSION.UnitString()})')
         axis.set_xlabel('Time')
         axis.grid(True)
         xs = numpy.array(freezerstate.GRAPH.times())
@@ -66,11 +69,13 @@ def plot_temp():
         response.mimetype = 'image/png'
         return response
 
+
 def raw_temperature():
     f = open(find_sensor(), 'r')
     lines = f.readlines()
     f.close()
     return lines
+
 
 def find_sensor():
     devices = listdir(freezerstate.DEVICE_FOLDER)
@@ -79,6 +84,7 @@ def find_sensor():
         return freezerstate.DEVICE_FOLDER + devices[0] + freezerstate.DEVICE_SUFFIX
     else:
         sys.exit("Could not find temperature sensor...")
+
 
 def get_temperature():
     lines = raw_temperature()
@@ -91,6 +97,7 @@ def get_temperature():
         celsius = round(float(output_temperature) / 1000.0, 1)
         return celsius
 
+
 def main_thread(name):
     if hasattr(sys, 'frozen'):
         freezerstate.FULL_PATH = os.path.abspath(sys.executable)
@@ -100,7 +107,8 @@ def main_thread(name):
     freezerstate.PROG_DIR = os.path.dirname(freezerstate.FULL_PATH)
     freezerstate.ARGS = sys.argv[1:]
 
-    parser = argparse.ArgumentParser(description='Temperature monitor and alerter')
+    parser = argparse.ArgumentParser(
+        description='Temperature monitor and alerter')
     parser.add_argument('--datadir', help='Alternate data directory')
     parser.add_argument('--config', help='Alternate path to config file')
     args = parser.parse_args()
@@ -113,21 +121,25 @@ def main_thread(name):
     if args.config:
         freezerstate.CONFIG_FILE = args.config
     else:
-        freezerstate.CONFIG_FILE = os.path.join(freezerstate.DATA_DIR, 'config.ini')
+        freezerstate.CONFIG_FILE = os.path.join(
+            freezerstate.DATA_DIR, 'config.ini')
 
-    print (f'Loading configuration from: {freezerstate.CONFIG_FILE}')
+    print(f'Loading configuration from: {freezerstate.CONFIG_FILE}')
     freezerstate.initialize(freezerstate.CONFIG_FILE)
 
-    print ('Monitoring temperature...')
+    print('Monitoring temperature...')
 
     while True:
         temperature = get_temperature()
 
-        print(f'Time: {datetime.now()} - {freezerstate.CONVERSION.TemperatureString(temperature, True)}')
-        freezerstate.GRAPH.plot(datetime.now(), freezerstate.CONVERSION.UnitizedTemperature(temperature))
+        print(
+            f'Time: {datetime.now()} - {freezerstate.CONVERSION.TemperatureString(temperature, True)}')
+        freezerstate.GRAPH.plot(
+            datetime.now(), freezerstate.CONVERSION.UnitizedTemperature(temperature))
         freezerstate.NOTIFY.update(temperature)
         time.sleep(freezerstate.CONFIG.SAMPLE_FREQUENCY)
     return
+
 
 if __name__ == "__main__":
     x = threading.Thread(target=main_thread, args=(1,))
