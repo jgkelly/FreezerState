@@ -15,6 +15,7 @@ _CONFIG_DEFINITIONS = OrderedDict({
     'ALERT_FREQUENCY': (int, 'Config', 30),          # Number of seconds allowed between alert notifications
     'GRAPH_DATA_POINTS': (int, 'Config', 14400),
     'DEVICE_ADDRESS': (str, 'Config', None),
+    'STATUS_CHECK_TIMES': (str, 'Config', None),
     'MAX_TEMPERATURE': (int, 'Temperature', -15),    # Maximum Temperature (in Celsius)
     'ALERT_ON_MAX': (bool, 'Temperature', True),
     'MIN_TEMPERATURE': (int, 'Temperature', -99),     # Minimum Temperature (in Celsius)
