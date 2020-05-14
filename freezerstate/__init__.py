@@ -1,13 +1,9 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-# This file is part of freezerstate.
-
 import threading
 import freezerstate.config
 import freezerstate.notify
 import freezerstate.graph
 import freezerstate.conversion
+from datetime import datetime
 
 DATA_DIR = None
 ARGS = None
@@ -20,9 +16,10 @@ GRAPH = None
 CONVERSION = None
 RANGE_MIN = -40
 RANGE_MAX = 50
+START_TIME = datetime.now()
 
 def initialize(config_file):
-    global CONFIG, CONFIG_FILE, DEVICE_FOLDER, DEVICE_SUFFIX, DATA_DIR, ARGS, NOTIFY, GRAPH, CONVERSION, RANGE_MIN, RANGE_MAX
+    global CONFIG, CONFIG_FILE, DEVICE_FOLDER, DEVICE_SUFFIX, DATA_DIR, ARGS, NOTIFY, GRAPH, CONVERSION, RANGE_MIN, RANGE_MAX, START_TIME
 
     cfg = freezerstate.config.Config(config_file)
     CONFIG = cfg.read();
