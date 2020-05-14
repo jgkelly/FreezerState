@@ -16,12 +16,17 @@ The idea is to have a Raspberry Pi Zero sitting on some sort of battery back-up,
 
 This project was written under Python 3.8 or greater. It was developed under Python 3.8.2. The application will fail if you attempt to run it in any version of Python less than 3.8.
 
+### Required Packages
+
+* flask
+* matplotlib
+
 ## Usage
 
 Currently, you will need to run this in the same folder as freezerstate.py:
 
 ```
-python freezerstate.py
+sudo python3 freezerstate.py
 ```
 
 ## Configuration

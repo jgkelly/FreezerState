@@ -11,13 +11,19 @@ _CONFIG_DEFINITIONS = OrderedDict({
     #keyname, type, section, default
     'LOCATION': (str, 'Config', None),
     'TEMPERATURE_UNITS': (str, 'Config', 'celsius'),
-    'SAMPLE_FREQUENCY': (int, 'Config', 1),          # Number of seconds between temperature samples
-    'ALERT_FREQUENCY': (int, 'Config', 30),          # Number of seconds allowed between alert notifications
+    # Number of seconds between temperature samples
+    'SAMPLE_FREQUENCY': (int, 'Config', 1),
+    # Number of seconds allowed between alert notifications
+    'ALERT_FREQUENCY': (int, 'Config', 30),
     'GRAPH_DATA_POINTS': (int, 'Config', 14400),
     'DEVICE_ADDRESS': (str, 'Config', None),
-    'MAX_TEMPERATURE': (int, 'Temperature', -15),    # Maximum Temperature (in Celsius)
+    'STATUS_CHECK_TIMES': (str, 'Config', None),
+    'DATE_TIME_STAMP_FORMAT': (str, 'Config', '%m/%d/%Y %X'),
+    # Maximum Temperature (in Celsius)
+    'MAX_TEMPERATURE': (int, 'Temperature', 40),
     'ALERT_ON_MAX': (bool, 'Temperature', True),
-    'MIN_TEMPERATURE': (int, 'Temperature', -99),     # Minimum Temperature (in Celsius)
+    # Minimum Temperature (in Celsius)
+    'MIN_TEMPERATURE': (int, 'Temperature', -40),
     'ALERT_ON_MIN': (bool, 'Temperature', False),
     'SMTP_ENABLED': (bool, "Email", False),
     'NOTIFICATION_EMAIL_ADDRESS': (str, 'Email', None),
@@ -29,8 +35,9 @@ _CONFIG_DEFINITIONS = OrderedDict({
     'SLACK_WEBHOOK_URL': (str, 'Slack', None)
 })
 
+
 class Config():
-    def __init__(self, config_file = 'config.ini'):
+    def __init__(self, config_file='config.ini'):
         self.config_file = config_file
 
     def read(self):
@@ -47,13 +54,14 @@ class Config():
 
     def config_vals(self):
         if os.path.isfile(self.config_file):
-            self.config = config.read_file(codecs.open(self.config_file, 'r', 'utf8'))
+            self.config = config.read_file(
+                codecs.open(self.config_file, 'r', 'utf8'))
             count = sum(1 for line in open(self.config_file))
         else:
             count = 0
 
         config_values = []
-        for k,v in _CONFIG_DEFINITIONS.items():
+        for k, v in _CONFIG_DEFINITIONS.items():
             values = []
             values.append(k)
             for x in v:
@@ -83,13 +91,13 @@ class Config():
             setattr(self, k, value)
 
             try:
-                #make sure interpolation isn't being used, so we can just escape the % character
+                # make sure interpolation isn't being used, so we can just escape the % character
                 if v[0] == str:
                     value = value.replace('%', '%%')
             except Exception as e:
                 pass
 
-            #just to ensure defaults are properly set...
+            # just to ensure defaults are properly set...
             if any([value is None, value == 'None']):
                 value = v[0](v[2])
 
@@ -111,13 +119,16 @@ class Config():
             if definition_type == str:
                 myval = {'status': True, 'value': config.get(section, inikey)}
             elif definition_type == int:
-                myval = {'status': True, 'value': config.getint(section, inikey)}
+                myval = {'status': True,
+                         'value': config.getint(section, inikey)}
             elif definition_type == bool:
-                myval = {'status': True, 'value': config.getboolean(section, inikey)}
+                myval = {'status': True,
+                         'value': config.getboolean(section, inikey)}
         except Exception:
             if definition_type == str:
                 try:
-                    myval = {'status': True, 'value': config.get(section, inikey, raw=True)}
+                    myval = {'status': True, 'value': config.get(
+                        section, inikey, raw=True)}
                 except (configparser.NoSectionError, configparser.NoOptionError):
                     myval = {'status': False, 'value': None}
             else:
