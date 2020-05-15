@@ -19,14 +19,22 @@ _CONFIG_DEFINITIONS = OrderedDict({
     'DEVICE_ADDRESS': (str, 'Config', None),
     'STATUS_CHECK_TIMES': (str, 'Config', None),
     'DATE_TIME_STAMP_FORMAT': (str, 'Config', '%m/%d/%Y %X'),
+    # -- Temperature Section --
     # Maximum Temperature (in Celsius)
     'MAX_TEMPERATURE': (int, 'Temperature', 40),
     'ALERT_ON_MAX': (bool, 'Temperature', True),
     # Minimum Temperature (in Celsius)
     'MIN_TEMPERATURE': (int, 'Temperature', -40),
     'ALERT_ON_MIN': (bool, 'Temperature', False),
-    'SLACK_ENABLED': (bool, "Slack", False),
-    'SLACK_WEBHOOK_URL': (str, 'Slack', None)
+    # -- Slack Section --
+    'SLACK_ENABLED': (bool, 'Slack', False),
+    'SLACK_WEBHOOK_URL': (str, 'Slack', None),
+    # -- MSSQL Section --
+    'MSSQL_ENABLED': (bool, 'MSSQL', False),
+    'MSSQL_SERVER': (str, 'MSSQL', None),
+    'MSSQL_DATABASE': (str, 'MSSQL', None),
+    'MSSQL_SERVER_USERNAME': (str, 'MSSQL', None),
+    'MSSQL_SERVER_PASSWORD': (str, 'MSSQL', None)
 })
 
 
