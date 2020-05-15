@@ -59,6 +59,11 @@ class Notifier:
             if x.enabled is True:
                 x.notify(message)
 
+    def send_startup_message(self):
+        timestring = freezerstate.START_TIME.strftime(freezerstate.CONFIG.DATE_TIME_STAMP_FORMAT)
+        message = f'*{self.location}* Started at {timestring}'
+        self.send_all_notifiers(message)
+
     def send_status_update(self, temperature, current_time):
 
         difference = current_time - self.last_notify

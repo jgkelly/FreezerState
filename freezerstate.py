@@ -128,6 +128,7 @@ def main_thread(name):
     freezerstate.initialize(freezerstate.CONFIG_FILE)
 
     print('Monitoring temperature...')
+    freezerstate.NOTIFY.send_startup_message()
 
     while True:
         temperature = get_temperature()
