@@ -25,12 +25,6 @@ _CONFIG_DEFINITIONS = OrderedDict({
     # Minimum Temperature (in Celsius)
     'MIN_TEMPERATURE': (int, 'Temperature', -40),
     'ALERT_ON_MIN': (bool, 'Temperature', False),
-    'SMTP_ENABLED': (bool, "Email", False),
-    'NOTIFICATION_EMAIL_ADDRESS': (str, 'Email', None),
-    'SMTP_SERVER': (str, 'Email', None),
-    'SMTP_USERNAME': (str, 'Email', None),
-    'SMTP_PASSWORD': (str, 'Email', None),
-    'SMTP_PORT': (int, 'Email', 485),
     'SLACK_ENABLED': (bool, "Slack", False),
     'SLACK_WEBHOOK_URL': (str, 'Slack', None)
 })
