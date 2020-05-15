@@ -71,3 +71,7 @@ GO
 
 ALTER TABLE [dbo].[Readings] CHECK CONSTRAINT [FK_Locations]
 GO
+
+INSERT INTO [dbo].[AlarmTypes] (Id, Name)
+VALUES(1, 'High'), (2, 'Low'), (3, 'Status Update')
+GO
