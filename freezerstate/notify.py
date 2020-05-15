@@ -12,6 +12,8 @@ class Notifier:
         self.location = freezerstate.CONFIG.LOCATION
         self.min_temperature = freezerstate.CONFIG.MIN_TEMPERATURE
         self.max_temperature = freezerstate.CONFIG.MAX_TEMPERATURE
+        self.notify_min = freezerstate.config.ALERT_ON_MIN
+        self.notify_max = freezerstate.config.ALERT_ON_MAX
         self.units = freezerstate.CONFIG.TEMPERATURE_UNITS.lower()
         self.notifiers = [freezerstate.notifiers.slack.SlackSender()]
         self.unit_conversion = ({
@@ -30,6 +32,12 @@ class Notifier:
             self.send_status_update(temperature, current_time)
 
         if temperature < self.max_temperature and temperature > self.min_temperature:
+            return False
+
+        if temperature >= self.max_temperature and self.notify_max is False:
+            return False
+
+        if temperature <= self.min_temperature and self.notify_min is False:
             return False
 
         difference = current_time - self.last_alert
@@ -63,7 +71,7 @@ class Notifier:
         timestring = current_time.strftime(
             freezerstate.CONFIG.DATE_TIME_STAMP_FORMAT)
         uptime_diff = current_time - freezerstate.START_TIME
-        uptime = uptime_diff.total_seconds() / 3600 
+        uptime = uptime_diff.total_seconds() / 3600
 
         message = f'*{self.location}* status update.\n🌡 {freezerstate.CONVERSION.TemperatureString(temperature, True)}\n⏰ {timestring}\n💻 Uptime: {uptime} hours'
         print(f'--- {current_time}: Sending uptime notification')
