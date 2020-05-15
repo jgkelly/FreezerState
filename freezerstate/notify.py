@@ -9,7 +9,6 @@ from datetime import datetime, timedelta
 class Notifier:
     def __init__(self):
         self.module = '[Notifier]'
-        self.location = freezerstate.CONFIG.LOCATION
         self.min_temperature = freezerstate.CONFIG.MIN_TEMPERATURE
         self.max_temperature = freezerstate.CONFIG.MAX_TEMPERATURE
         self.notify_min = freezerstate.CONFIG.ALERT_ON_MIN
@@ -61,7 +60,7 @@ class Notifier:
 
     def send_startup_message(self):
         timestring = freezerstate.START_TIME.strftime(freezerstate.CONFIG.DATE_TIME_STAMP_FORMAT)
-        message = f'💻 *{self.location}* monitoring started at {timestring}'
+        message = f'💻 *{freezerstate.CONFIG.LOCATION}* monitoring started at {timestring}'
         self.send_all_notifiers(message)
 
     def send_status_update(self, temperature, current_time):
@@ -78,13 +77,13 @@ class Notifier:
         uptime_diff = current_time - freezerstate.START_TIME
         uptime = uptime_diff.total_seconds() / 3600
 
-        message = f'*{self.location}* status update.\n🌡 {freezerstate.CONVERSION.TemperatureString(temperature, True)}\n⏰ {timestring}\n💻 Uptime: {uptime} hours'
+        message = f'*{freezerstate.CONFIG.LOCATION}* status update.\n🌡 {freezerstate.CONVERSION.TemperatureString(temperature, True)}\n⏰ {timestring}\n💻 Uptime: {uptime} hours'
         print(f'--- {current_time}: Sending uptime notification')
         self.last_notify = current_time
         self.send_all_notifiers(message)
 
     def reading_location(self):
-        readingLocation = 'Temperature' if self.location is None else f'{self.location} temperature'
+        readingLocation = 'Temperature' if freezerstate.CONFIG.LOCATION is None else f'{freezerstate.CONFIG.LOCATION} temperature'
         return readingLocation
 
     def get_notify_text(self, temperature):
