@@ -12,8 +12,8 @@ class Notifier:
         self.location = freezerstate.CONFIG.LOCATION
         self.min_temperature = freezerstate.CONFIG.MIN_TEMPERATURE
         self.max_temperature = freezerstate.CONFIG.MAX_TEMPERATURE
-        self.notify_min = freezerstate.config.ALERT_ON_MIN
-        self.notify_max = freezerstate.config.ALERT_ON_MAX
+        self.notify_min = freezerstate.CONFIG.ALERT_ON_MIN
+        self.notify_max = freezerstate.CONFIG.ALERT_ON_MAX
         self.units = freezerstate.CONFIG.TEMPERATURE_UNITS.lower()
         self.notifiers = [freezerstate.notifiers.slack.SlackSender()]
         self.unit_conversion = ({
