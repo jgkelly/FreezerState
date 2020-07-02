@@ -20,6 +20,7 @@ import time
 import threading
 import argparse
 import numpy
+import humanize
 from datetime import datetime
 from os import listdir, system
 from flask import Flask, jsonify, render_template, make_response
@@ -37,13 +38,17 @@ app = Flask('freezerstate')
 
 @app.route("/")
 def index():
+    uptime_delta = datetime.now() - freezerstate.START_TIME
+    uptime_string = humanize.naturaldelta(uptime_delta.total_seconds())
+
     template_data = {
         'location': freezerstate.CONFIG.LOCATION,
         'time': freezerstate.GRAPH.last_time(),
         'temperature': freezerstate.GRAPH.last_temp(),
         'units': freezerstate.CONVERSION.UnitString(),
         'min_temperature': freezerstate.CONVERSION.UnitizedTemperature(freezerstate.RANGE_MIN),
-        'max_temperature': freezerstate.CONVERSION.UnitizedTemperature(freezerstate.RANGE_MAX)
+        'max_temperature': freezerstate.CONVERSION.UnitizedTemperature(freezerstate.RANGE_MAX),
+        'uptime' : uptime_string
     }
     return render_template('index.html', **template_data)
 

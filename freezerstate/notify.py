@@ -3,6 +3,7 @@
 import freezerstate.config
 import freezerstate.notifiers.slack
 import freezerstate.statusupdate
+import humanize
 from datetime import datetime, timedelta
 
 
@@ -76,9 +77,10 @@ class Notifier:
         timestring = current_time.strftime(
             freezerstate.CONFIG.DATE_TIME_STAMP_FORMAT)
         uptime_diff = current_time - freezerstate.START_TIME
-        uptime = uptime_diff.total_seconds() / 3600
+        uptime = uptime_diff.total_seconds()
+        uptime_readable = humanize.naturaldelta(uptime)
 
-        message = f'*{self.location}* status update.\n🌡 {freezerstate.CONVERSION.TemperatureString(temperature, True)}\n⏰ {timestring}\n💻 Uptime: {uptime} hours'
+        message = f'*{self.location}* status update.\n🌡 {freezerstate.CONVERSION.TemperatureString(temperature, True)}\n⏰ {timestring}\n💻 Uptime: {uptime_readable}'
         print(f'--- {current_time}: Sending uptime notification')
         self.last_notify = current_time
         self.send_all_notifiers(message)
