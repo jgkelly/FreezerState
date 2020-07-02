@@ -4,7 +4,6 @@ import freezerstate.config
 import time
 import datetime
 
-
 class StatusUpdate:
     def __init__(self, test_enabled=None, test_times=None):
         self.module = '[StatusUpdate]'
