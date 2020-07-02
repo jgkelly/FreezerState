@@ -20,6 +20,7 @@ This project was written under Python 3.8 or greater. It was developed under Pyt
 
 * flask
 * matplotlib
+* humanize
 
 ## Usage
 
