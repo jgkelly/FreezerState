@@ -56,3 +56,10 @@ This section contains the configuration values needed to send an alert to a conf
 
 - `slack_enabled`: Set to `True` to enable notifications via Slack.
 - `slack_webhook_url`: Set this value to the URL you have configured to a Slack webhook application. Slack has a good article on setting up a Webhook [here](https://api.slack.com/messaging/webhooks).
+
+### Homeassistant Section
+
+This section contains the configuration values needed to enable status reporting to Homeassistant.
+
+- `homeassistant_enabled`: (boolean) Set to `True` to enable status updates to Homeassistant.
+- `homeassistant_url`: (string) Set this value to the URL configured to accept temperature update values. 

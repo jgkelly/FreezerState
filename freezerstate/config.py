@@ -27,6 +27,9 @@ _CONFIG_DEFINITIONS = OrderedDict({
     'ALERT_ON_MIN': (bool, 'Temperature', False),
     'SLACK_ENABLED': (bool, "Slack", False),
     'SLACK_WEBHOOK_URL': (str, 'Slack', None)
+    # Homeassistant Integration
+    'HOMEASSISTANT_ENABLED': (bool, 'Homeassistant', False)
+    'HOMEASSISTANT_URL': (bool, 'Homeassistant', None)
 })
 
 
