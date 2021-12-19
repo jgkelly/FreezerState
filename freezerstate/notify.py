@@ -18,7 +18,6 @@ class Notifier:
         self.notifiers = freezerstate.notifiers.notifiers.Notifiers()
         self.updaters = freezerstate.updaters.updaters.Updaters()
         self.alert_frequency = freezerstate.CONFIG.ALERT_FREQUENCY
-        self.status_update_times = freezerstate.statusupdate.StatusUpdate()
         self.last_alert = datetime.min
         self.last_temperature = None
 
