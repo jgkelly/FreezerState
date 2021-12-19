@@ -59,7 +59,17 @@ This section contains the configuration values needed to send an alert to a conf
 
 ### Homeassistant Section
 
-This section contains the configuration values needed to enable status reporting to Homeassistant.
+This section contains the configuration values needed to enable status reporting to Homeassistant via the [Homeassistant REST API](https://developers.home-assistant.io/docs/api/rest/).
 
 - `homeassistant_enabled`: (boolean) Set to `True` to enable status updates to Homeassistant.
 - `homeassistant_url`: (string) Set this value to the URL configured to accept temperature update values. 
+- `homeassistant_token` : (string) This value should contain the long-lived access token generated under your Homeassistant profile. See the [Homeassistant REST API Documentation](https://developers.home-assistant.io/docs/api/rest/) for details on setting up a long-lived access token.
+
+The `location` config value will be used to name the sensor identifiers published to Homeassistant. For example: if `location` is set to "freezer", the current temperature will be published to the `sensor.freezer_temperature` entity.
+
+   The following sensor values are published to Homeassistant:
+
+    | Sensor Name | Description                            |
+    |-------------|----------------------------------------|
+    | temperature | Temperature value observed from device |
+    | uptime      | Total time the device has been active  |
