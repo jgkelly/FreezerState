@@ -67,9 +67,9 @@ This section contains the configuration values needed to enable status reporting
 
 The `location` config value will be used to name the sensor identifiers published to Homeassistant. For example: if `location` is set to "freezer", the current temperature will be published to the `sensor.freezer_temperature` entity.
 
-   The following sensor values are published to Homeassistant:
+The following sensor values are published to Homeassistant:
 
-    | Sensor Name | Description                            |
-    |-------------|----------------------------------------|
-    | temperature | Temperature value observed from device |
-    | uptime      | Total time the device has been active  |
+| Sensor Name | Description                            |
+|-------------|----------------------------------------|
+| temperature | Temperature value observed from device |
+| uptime      | Total time the device has been active  |
