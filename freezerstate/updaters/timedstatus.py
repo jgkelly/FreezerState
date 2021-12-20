@@ -12,6 +12,7 @@ class TimedStatus():
         self.notifiers = freezerstate.notifiers.notifiers.Notifiers()
         self.last_notify = datetime.min
         self.status_update_times = freezerstate.statusupdate.StatusUpdate()
+        self.location = freezerstate.CONFIG.LOCATION
 
     def update(self, temperature, current_time):
         if self.status_update_times.should_notify(current_time):
