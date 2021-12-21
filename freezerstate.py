@@ -9,7 +9,7 @@ Code based on ModMyPi's tutorial:
 And Tim Fernando's "temperature-serve-pi" project:
 - https://github.com/timfernando/temperature-serve-pi
 
-Copyright (c) 2020, Jeff Kelly
+Copyright (c) 2021, Jeff Kelly
 Licensed under the MIT license scheme
 """
 

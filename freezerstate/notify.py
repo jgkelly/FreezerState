@@ -1,9 +1,9 @@
 # Global level notifier
 
 import freezerstate.config
-import freezerstate.notifiers.slack
 import freezerstate.statusupdate
-import humanize
+import freezerstate.updaters.updaters
+import freezerstate.notifiers.notifiers
 from datetime import datetime, timedelta
 
 
@@ -15,22 +15,15 @@ class Notifier:
         self.max_temperature = freezerstate.CONFIG.MAX_TEMPERATURE
         self.notify_min = freezerstate.CONFIG.ALERT_ON_MIN
         self.notify_max = freezerstate.CONFIG.ALERT_ON_MAX
-        self.units = freezerstate.CONFIG.TEMPERATURE_UNITS.lower()
-        self.notifiers = [freezerstate.notifiers.slack.SlackSender()]
-        self.unit_conversion = ({
-            'celsius': ('C'),
-            'farenheit': ('F')
-        })
+        self.notifiers = freezerstate.notifiers.notifiers.Notifiers()
+        self.updaters = freezerstate.updaters.updaters.Updaters()
         self.alert_frequency = freezerstate.CONFIG.ALERT_FREQUENCY
-        self.status_update_times = freezerstate.statusupdate.StatusUpdate()
         self.last_alert = datetime.min
-        self.last_notify = datetime.min
         self.last_temperature = None
 
     def update(self, temperature):
         current_time = datetime.now()
-        if (self.status_update_times.should_notify(current_time)):
-            self.send_status_update(temperature, current_time)
+        self.updaters.update(temperature, current_time)
 
         if temperature < self.max_temperature and temperature > self.min_temperature:
             return False
@@ -51,39 +44,15 @@ class Notifier:
         message = self.get_notify_text(temperature)
 
         self.last_temperature = temperature
-        self.send_all_notifiers(message)
+        self.notifiers.notify(message)
 
         return True
 
-    def send_all_notifiers(self, message):
-        for x in self.notifiers:
-            if x.enabled is True:
-                x.notify(message)
-
     def send_startup_message(self):
-        timestring = freezerstate.START_TIME.strftime(freezerstate.CONFIG.DATE_TIME_STAMP_FORMAT)
-        message = f'💻 *{self.location}* monitoring started at {timestring}'
-        self.send_all_notifiers(message)
-
-    def send_status_update(self, temperature, current_time):
-
-        difference = current_time - self.last_notify
-        if (difference.total_seconds() <= 60):
-            print(
-                f'--- It has been {difference.total_seconds()} seconds since last status update. Skipping status update')
-            return False
-
-        readingLocation = self.reading_location()
-        timestring = current_time.strftime(
+        timestring = freezerstate.START_TIME.strftime(
             freezerstate.CONFIG.DATE_TIME_STAMP_FORMAT)
-        uptime_diff = current_time - freezerstate.START_TIME
-        uptime = uptime_diff.total_seconds()
-        uptime_readable = humanize.naturaldelta(uptime)
-
-        message = f'*{self.location}* status update.\n🌡 {freezerstate.CONVERSION.TemperatureString(temperature, True)}\n⏰ {timestring}\n💻 Uptime: {uptime_readable}'
-        print(f'--- {current_time}: Sending uptime notification')
-        self.last_notify = current_time
-        self.send_all_notifiers(message)
+        message = f'💻 *{self.location}* monitoring started at {timestring}'
+        self.notifiers.notify(message)
 
     def reading_location(self):
         readingLocation = 'Temperature' if self.location is None else f'{self.location} temperature'
@@ -113,6 +82,3 @@ class Notifier:
 
         return '➡'
 
-    def to_farenheit(self, celsius):
-        farenheit = round((celsius * 1.8) + 32.0, 1)
-        return farenheit
